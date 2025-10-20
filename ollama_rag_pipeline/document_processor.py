@@ -133,8 +133,8 @@ def convert_to_document(doc: Union[str,Tuple[str, dict], Document, None]) -> Opt
             processed_metadata = _process_metadata(metadata or {})
             return Document(page_content=content, metadata=processed_metadata)
         #path to a file 
-        if isinstance(doc, string)
-            
+        if isinstance(doc, str):
+            return load_document(doc)                   
         
         logger.warning(f"Unexpected document type: {type(doc)}")
         return None
