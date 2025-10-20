@@ -10,12 +10,51 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownHead
 from langchain_community.vectorstores import Chroma
 from langchain_core.documents import Document
 from langchain_unstructured import UnstructuredLoader
-
+from langchain_community.document_loaders import (
+    PyPDFLoader,
+    UnstructuredFileLoader,
+    TextLoader,
+    CSVLoader,
+    PythonLoader,
+    JSONLoader,
+    UnstructuredMarkdownLoader,
+    UnstructuredHTMLLoader,
+    UnstructuredPowerPointLoader,
+    UnstructuredWordDocumentLoader
+)
 from .config import Config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def load_document(path2document):
+    ext = os.path.splitext(path2document)[1].lower()
+
+    if ext == ".pdf":
+        loader = PyPDFLoader(path2document)
+    elif ext == ".txt":
+        loader = TextLoader(path2document)
+    elif ext == ".csv":
+        loader = CSVLoader(path2document)
+    elif ext == ".py":
+        loader = PythonLoader(path2document)
+    elif ext == ".json":
+        loader = JSONLoader(path2document)
+    elif ext == ".md":
+        loader = UnstructuredMarkdownLoader(path2document)
+    elif ext in [".docx", ".doc"]:
+        loader = UnstructuredWordDocumentLoader(path2document)
+    elif ext in [".pptx", ".ppt"]:
+        loader = UnstructuredPowerPointLoader(path2document)
+    elif ext in [".html", ".htm"]:
+        loader = UnstructuredHTMLLoader(path2document)
+    else:
+        loader = UnstructuredFileLoader(path2document)
+
+    return loader.load()
+
 
 def _process_metadata(metadata: dict) -> dict:
     """Process metadata to handle lists and other complex types."""
@@ -71,7 +110,7 @@ def _split_markdown_document(doc: Document) -> List[Document]:
     
     return final_splits
 
-def convert_to_document(doc: Union[Tuple[str, dict], Document, None]) -> Optional[Document]:
+def convert_to_document(doc: Union[str,Tuple[str, dict], Document, None]) -> Optional[Document]:
     """Convert various input types to a Document object."""
     if doc is None:
         return None
@@ -93,7 +132,10 @@ def convert_to_document(doc: Union[Tuple[str, dict], Document, None]) -> Optiona
                 return None
             processed_metadata = _process_metadata(metadata or {})
             return Document(page_content=content, metadata=processed_metadata)
+        #path to a file 
+        if isinstance(doc, string)
             
+        
         logger.warning(f"Unexpected document type: {type(doc)}")
         return None
         
