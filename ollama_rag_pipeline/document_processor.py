@@ -54,7 +54,8 @@ def load_document(path2document):
     else:
         loader = UnstructuredFileLoader(path2document)
 
-    return loader.load()
+    documents = loader.load()
+    return documents[0]
 
 
 def _process_metadata(metadata: dict) -> dict:
