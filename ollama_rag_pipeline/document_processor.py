@@ -30,6 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 def load_document(path2document):
+    logger.info(f"Loading local document: {path2document}")
     ext = os.path.splitext(path2document)[1].lower()
 
     if ext == ".pdf":
