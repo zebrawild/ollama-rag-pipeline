@@ -4,6 +4,7 @@ import logging
 import os
 import tempfile
 import shutil
+import pprint
 from typing import List, Optional, Union, Tuple, Any
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
@@ -55,7 +56,7 @@ def load_document(path2document):
         loader = UnstructuredFileLoader(path2document)
 
     documents = loader.load()
-    logger.info(f'langchain document loaded pprint.pformat(documents[0])')
+    logger.info(f'langchain document loaded {pprint.pformat(documents[0])}')
     return documents[0]
 
 
