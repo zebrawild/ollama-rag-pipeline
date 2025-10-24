@@ -192,7 +192,7 @@ async def clear_vectordb():
                 for f in files:
                     os.chmod(os.path.join(root, f), 0o666)
             
-            llm = OllamaLLM(model=Config.LLM_MODEL)
+            llm = OllamaLLM(model=Config.LLM_MODEL,stop=["[control_", "[control_36]", "] [control_"])
             qa_chain = create_qa_chain(llm, vectordb.as_retriever())
             logger.info("Vector database reinitialized successfully")
             return {"message": "Vector database cleared and reinitialized successfully"}
