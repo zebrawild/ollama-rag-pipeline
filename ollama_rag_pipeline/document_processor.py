@@ -55,6 +55,7 @@ def load_document(path2document):
         loader = UnstructuredFileLoader(path2document)
 
     documents = loader.load()
+    logger.info(f'langchain document loaded pprint.pformat(documents[0])')
     return documents[0]
 
 
