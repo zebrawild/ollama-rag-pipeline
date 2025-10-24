@@ -169,7 +169,7 @@ async def clear_vectordb():
                 logger.info(f"Loading document: {file_path}")
                 try:
                     loaded_doc = load_document(file_path)                    
-                    logger.info(f"Successfully loaded {len(loaded_docs)} chunks from {filename}")
+                    logger.info(f"Successfully loaded {len(loaded_doc)} chunks from {filename}")
                     docs.extend(loaded_doc)
                 except Exception as e:
                     logger.error(f"Error loading document {filename}: {e}")
