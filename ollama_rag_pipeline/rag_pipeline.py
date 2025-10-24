@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 
 from .config import Config
 from .chain import create_qa_chain, get_current_time_context
-from .document_processor import process_documents, initialize_vectordb
+from .document_processor import process_documents, initialize_vectordb,load_document
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -168,10 +168,9 @@ async def clear_vectordb():
                 file_path = os.path.join(Config.DOCS_DIR, filename)
                 logger.info(f"Loading document: {file_path}")
                 try:
-                    loader = UnstructuredLoader(file_path)
-                    loaded_docs = loader.load()
+                    loaded_doc = load_document(file_path)                    
                     logger.info(f"Successfully loaded {len(loaded_docs)} chunks from {filename}")
-                    docs.extend(loaded_docs)
+                    docs.extend(loaded_doc)
                 except Exception as e:
                     logger.error(f"Error loading document {filename}: {e}")
                     continue
