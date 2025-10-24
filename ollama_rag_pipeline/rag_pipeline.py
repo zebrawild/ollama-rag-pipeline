@@ -42,7 +42,8 @@ async def lifespan(app: FastAPI):
     vectordb = initialize_vectordb(embedding)
     
     if vectordb:
-        llm = OllamaLLM(model=Config.LLM_MODEL)
+       	# llm = OllamaLLM(model=Config.LLM_MODEL)
+        llm = OllamaLLM(model=Config.LLM_MODEL,stop=["[control_", "[control_36]", "] [control_"])
         qa_chain = create_qa_chain(llm, vectordb.as_retriever())
         logger.info("RAG pipeline initialized successfully")
     else:
@@ -111,6 +112,8 @@ async def upload_file(file: UploadFile = File(...)):
                 raise HTTPException(status_code=400, detail="No content extracted from file")
             temp_file.write(content)
             temp_path = temp_file.name
+            logger.info(f"temp file located at {temp_path}")
+            logger.info(f"temp file content {content}") 
             
         # Process document
         global vectordb, qa_chain

@@ -6,8 +6,8 @@ class Config:
     """Configuration constants for the RAG pipeline."""
     
     # Model Configuration
-    EMBEDDING_MODEL       = os.getenv("EMBEDDING_MODEL", "mxbai-embed-large")
-    LLM_MODEL             = os.getenv("LLM_MODEL", "gemma3:12b")
+    EMBEDDING_MODEL       = os.getenv("EMBEDDING_MODEL", "nomic-embed-text")
+    LLM_MODEL             = os.getenv("LLM_MODEL", "mistral")
     
     # Document Processing
     CHUNK_SIZE            = int(os.getenv("CHUNK_SIZE", "1000"))
@@ -15,11 +15,12 @@ class Config:
     SUPPORTED_FILE_TYPES  = (".txt", ".pdf", ".md", ".docx")
     
     # Directory Configuration
-    DOCS_DIR              = os.getenv("DOCS_DIR", "docs")
+    DOCS_DIR              = os.getenv("DOCS_DIR", "/home/david/ollama-rag-pipeline/docs")
     VECTOR_DB_DIR         = os.getenv("VECTOR_DB_DIR", "./vector_db")
     
     # API Configuration
-    HOST                  = os.getenv("HOST", "0.0.0.0")
-    PORT                  = int(os.getenv("PORT", "8000"))
+    HOST                  = "127.0.0.1"
+    PORT                  = int(8085)
     
-    VERBOSE = False 
+    VERBOSE = True 
+	
