@@ -255,8 +255,7 @@ def initialize_vectordb(embedding) -> Optional[Chroma]:
         for filename in os.listdir(Config.DOCS_DIR):
             if filename.endswith(Config.SUPPORTED_FILE_TYPES):
                 file_path = os.path.join(Config.DOCS_DIR, filename)
-                loader = UnstructuredLoader(file_path)
-                docs.extend(loader.load())
+                 docs.extend(load_document(file_path))
                 
         if not docs:
             logger.warning("No documents found in docs directory")
